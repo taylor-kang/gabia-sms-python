@@ -18,6 +18,14 @@ INSTALL_REQUIRES = [
     'Django>=1.11',
 ]
 
+TESTS_REQUIRE = [
+    'pytest>=3.0.0',
+    'pytest-cov',
+    'tox',
+    'mock',
+]
+
+
 setup(
     name='gabia-sms-Django',
     version=VERSION,
@@ -29,6 +37,7 @@ setup(
     download_url='https://github.com/hwshim0810/gabia-sms-Django/archive/master.zip',
     packages=('gabia_sms',),
     install_requires=INSTALL_REQUIRES,
+    tests_require=TESTS_REQUIRE,
     classifiers=[
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
