@@ -1,0 +1,22 @@
+sudo: false
+language: python
+python: '3.6'
+
+env:
+  - TOXENV=py27-django111
+  - TOXENV=py34-django111
+  - TOXENV=py36-django111
+  - TOXENV=py36-django20
+  - TOXENV=py36-djangomaster
+  - TOXENV=flake8
+
+cache:
+  directories:
+    - $HOME/.cache/pip
+    - $TRAVIS_BUILD_DIR/.tox
+
+install:
+  - pip install tox
+
+script:
+  - tox
