@@ -3,13 +3,13 @@ from __future__ import with_statement
 from setuptools import setup
 
 
-VERSION = '1.0.0'
+VERSION = '1.0.1'
 
 
 def readme():
     try:
         with open('README.rst') as f:
-            return f.read().strip()
+            return f.read()
     except IOError:
         return ''
 
