@@ -9,5 +9,6 @@ def send(message, receiver, title='SEND', sms_type='sms', scheduled_time='0', *a
     :param title: SMS TITLE(DEFAULT VALUE: 'SEND') : Used where the sms_type is 'lms'
     :param sms_type: ref KNOWN_SMS_TYPES: default is sms
     :param scheduled_time: default 0: send immediately or '%Y-%M-%D %h:%m:%s'
+    :return Key of sent SMS
     """
-    GabiaSMS().send(message, receiver, title, sms_type, scheduled_time, *args, **kwargs)
+    return GabiaSMS().send(message, receiver, title, sms_type, scheduled_time, *args, **kwargs)

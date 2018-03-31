@@ -102,11 +102,12 @@ class GabiaSMS:
         :param title: SMS TITLE(DEFAULT VALUE: 'SEND') : Used where the sms_type is 'lms'
         :param sms_type: ref KNOWN_SMS_TYPES: default is sms
         :param scheduled_time: default 0: send immediately or '%Y-%M-%D %h:%m:%s'
+        :return Key of sent SMS
         """
         if sms_type not in KNOWN_SMS_TYPES:
             raise SMSModuleException('Please check sms type!')
 
-        self.__send_single(
+        return self.__send_single(
             self.__get_sms_param(message, receiver, title, scheduled_time),
             *args,
             **kwargs
@@ -138,6 +139,8 @@ class GabiaSMS:
                     logging.getLogger(__name__).debug(result_code)
 
                 self.post_sent_sms(param, *args, **kwargs)
+
+                return param['key']
 
             except xmlrpc_lib.Error as e:
                 import logging
