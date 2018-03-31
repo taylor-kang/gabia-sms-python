@@ -19,7 +19,19 @@ def send(message, receiver,
 
 def get_send_result(key):
     """
+    Shortcut function for get Result\n
     :param key: The key to lookup
     :return: Result code received by key
     """
     return SingletonGabiaSMS().get_send_result(key)
+
+
+def cancel_reservation(key, sms_type, receiver=''):
+    """
+    Shortcut function for cancel reservation\n
+    :param key: The key to lookup
+    :param sms_type: SMS type in ['sms', 'lms', 'multi_sms', 'multi_lms']
+    :param receiver: Will receive phone number : string or list or set
+           Default value is empty string(Cancel all reservation)
+    """
+    return SingletonGabiaSMS().cancel_reservation(key, sms_type, receiver)

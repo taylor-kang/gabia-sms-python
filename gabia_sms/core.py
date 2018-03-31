@@ -70,6 +70,21 @@ class GabiaSMS:
             if not re.compile(PHONE_NUMBER_REGEX).search(phone_number):
                 raise SMSModuleException('Please check phone number!')
 
+    def __validate_reservation_params(self, sms_type, receiver):
+        if sms_type not in KNOWN_SMS_TYPES:
+            raise SMSModuleException('Please check sms type!')
+        elif not isinstance(receiver, str) or \
+                not isinstance(receiver, list) or not isinstance(receiver, set):
+            raise SMSModuleException('Please check parameters type!')
+
+        if isinstance(receiver, str):
+            if not re.compile(PHONE_NUMBER_REGEX).search(receiver):
+                raise SMSModuleException('Please check phone number!')
+        else:
+            for phone_number in receiver:
+                if not re.compile(PHONE_NUMBER_REGEX).search(phone_number):
+                    raise SMSModuleException('Please check phone number!')
+
     def __get_md5_access_token(self):
         nonce = get_nonce()
         return nonce + hashlib.md5(
@@ -185,6 +200,34 @@ class GabiaSMS:
                 self.post_sent_sms(param, *args, **kwargs)
 
                 return param['key']
+
+            except xmlrpc_lib.Error as e:
+                import logging
+                logging.getLogger(__name__).error(e)
+                raise SMSModuleException('Bad request. Please check api docs')
+
+    def cancel_reservation(self, key, sms_type, receiver=''):
+        """
+        :param key: The key to lookup
+        :param sms_type: SMS type in ['sms', 'lms', 'multi_sms', 'multi_lms']
+        :param receiver: Will receive phone number : string or list or set
+               Default value is empty string(Cancel all reservation)
+        """
+
+        self.__validate_reservation_params(sms_type, receiver)
+
+        with xmlrpc_lib.ServerProxy(self.__API_URL) as proxy:
+            try:
+                response = proxy.gabiasms(
+                    formats.REQUEST_RESERVE_CANCEL_FORMAT.format(
+                        api_id=self.__settings['API_ID'],
+                        access_token=self.__get_md5_access_token(),
+                        key=key,
+                        sms_type=sms_type,
+                        receiver=receiver
+                    )
+                )
+                return get_result_code(response)
 
             except xmlrpc_lib.Error as e:
                 import logging

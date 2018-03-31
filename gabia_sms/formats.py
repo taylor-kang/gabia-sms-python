@@ -27,3 +27,17 @@ REQUEST_SMS_RESULT_FORMAT = """
 </params>
 </request>
 """
+
+REQUEST_RESERVE_CANCEL_FORMAT = """
+<request>
+<sms-id>{api_id}</sms-id>
+<access-token>{access_token}</access-token>
+<response-format>xml</response-format>
+<method>SMS.reservationCancel</method>
+<params>
+<ref_key>{key}</ref_key>
+<send_type>{sms_type}</send_type>
+<phonenum>{receiver}</phonenum>
+</params>
+</request>
+"""
