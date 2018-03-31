@@ -12,3 +12,11 @@ def send(message, receiver, title='SEND', sms_type='sms', scheduled_time='0', *a
     :return Key of sent SMS
     """
     return GabiaSMS().send(message, receiver, title, sms_type, scheduled_time, *args, **kwargs)
+
+
+def get_send_result(key):
+    """
+    :param key: The key to lookup
+    :return: Result code received by key
+    """
+    return GabiaSMS().get_send_result(key)

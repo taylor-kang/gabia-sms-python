@@ -6,8 +6,8 @@ import re
 from django.conf import settings
 from django.utils import timezone
 
+from . import formats
 from .exceptions import SMSModuleException
-from .formats import REQUEST_SMS_XML_FORMAT
 from .parser import get_result_code
 from .utils import escape_xml_string, get_nonce
 
@@ -113,6 +113,27 @@ class GabiaSMS:
             **kwargs
         )
 
+    def get_send_result(self, key):
+        """
+        :param key: The key to lookup
+        :return: Result code received by key
+        """
+        with xmlrpc_lib.ServerProxy(self.__API_URL) as proxy:
+            try:
+                response = proxy.gabiasms(
+                    formats.REQUEST_SMS_RESULT_FORMAT.format(
+                        api_id=self.__settings['API_ID'],
+                        access_token=self.__get_md5_access_token(),
+                        key=key
+                    )
+                )
+                return get_result_code(response)
+
+            except xmlrpc_lib.Error as e:
+                import logging
+                logging.getLogger(__name__).error(e)
+                raise SMSModuleException('Bad request. Please check api docs')
+
     def __send_single(self, param, *args, **kwargs):
 
         with xmlrpc_lib.ServerProxy(self.__API_URL) as proxy:
@@ -120,7 +141,7 @@ class GabiaSMS:
                 self.before_send_sms(param, *args, **kwargs)
 
                 response = proxy.gabiasms(
-                    REQUEST_SMS_XML_FORMAT.format(
+                    formats.REQUEST_SMS_XML_FORMAT.format(
                         api_id=self.__settings['API_ID'],
                         access_token=self.__get_md5_access_token(),
                         sms_type=param['sms_type'],

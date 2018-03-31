@@ -15,3 +15,15 @@ REQUEST_SMS_XML_FORMAT = """
 </params>
 </request>
 """
+
+REQUEST_SMS_RESULT_FORMAT = """
+<request>
+<sms-id>{api_id}</sms-id>
+<access-token>{access_token}</access-token>
+<response-format>xml</response-format>
+<method>SMS.getStatusByRef</method>
+<params>
+<ref_key>{key}</ref_key>
+</params>
+</request>
+"""
