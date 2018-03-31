@@ -77,13 +77,14 @@ class GabiaSMS:
                 not isinstance(receiver, list) and not isinstance(receiver, set):
             raise SMSModuleException('Please check parameters type!')
 
-        if isinstance(receiver, str):
-            if not re.compile(PHONE_NUMBER_REGEX).search(receiver):
-                raise SMSModuleException('Please check phone number!')
-        else:
-            for phone_number in receiver:
-                if not re.compile(PHONE_NUMBER_REGEX).search(phone_number):
+        if receiver:
+            if isinstance(receiver, str):
+                if not re.compile(PHONE_NUMBER_REGEX).search(receiver):
                     raise SMSModuleException('Please check phone number!')
+            else:
+                for phone_number in receiver:
+                    if not re.compile(PHONE_NUMBER_REGEX).search(phone_number):
+                        raise SMSModuleException('Please check phone number!')
 
     def __get_md5_access_token(self):
         nonce = get_nonce()
