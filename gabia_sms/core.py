@@ -25,8 +25,8 @@ MISSING_SETTING = (
 )
 REQUIRED_SETTINGS = ('API_ID', 'API_KEY', 'SENDER')
 KNOWN_SMS_TYPES = ('sms', 'lms', 'multi_sms', 'multi_lms')
-SINGLE_SMS_TYPES = ('sms', 'lms')
-MULTI_SMS_TYPES = ('multi_sms', 'multi_lms')
+SINGLE_TYPES = ('sms', 'lms')
+MULTI_TYPES = ('multi_sms', 'multi_lms')
 SUCCESS_CODE = '0000'
 
 
@@ -107,7 +107,7 @@ class GabiaSMS:
 
     def __get_sms_param(self, message, receiver, title, scheduled_time, sms_type):
 
-        if sms_type in SINGLE_SMS_TYPES:
+        if sms_type in SINGLE_TYPES:
             self.__validate_required_params(message, receiver)
         else:
             receivers = set(receiver)
@@ -136,7 +136,7 @@ class GabiaSMS:
         :param title: SMS TITLE: Used where the sms_type is 'lms' or 'multi_lms'
         :param sms_type: ['sms', 'lms', 'multi_sms', 'multi_lms'] : default value is 'sms'
         :param scheduled_time: default 0: send immediately or '%Y-%M-%D %h:%m:%s'
-        :return Key of sent SMS
+        :return Tuple (Key of sent SMS, result code)
         """
         if sms_type not in KNOWN_SMS_TYPES:
             raise SMSModuleException('Please check sms type!')
@@ -175,7 +175,7 @@ class GabiaSMS:
                 self.before_send_sms(param, *args, **kwargs)
 
                 sms_type = param['sms_type']
-                method_name = 'SMS.send' if sms_type in SINGLE_SMS_TYPES else 'SMS.multi_send'
+                method_name = 'SMS.send' if sms_type in SINGLE_TYPES else 'SMS.multi_send'
 
                 response = proxy.gabiasms(
                     formats.REQUEST_SMS_XML_FORMAT.format(
@@ -199,7 +199,7 @@ class GabiaSMS:
 
                 self.post_sent_sms(param, *args, **kwargs)
 
-                return param['key']
+                return param['key'], result_code
 
             except xmlrpc_lib.Error as e:
                 import logging
