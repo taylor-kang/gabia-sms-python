@@ -1,5 +1,6 @@
+===========================
 Gabia SMS module for Django
-~~~~~~~~~~~~~
+===========================
 
 Python 2 & 3 compatible
 
@@ -16,7 +17,7 @@ Quickstart
 
 Send sms message to use shortcut function
 
-.. sourcecode:: python
+.. code-block:: python
 
     import gabia_sms
 
@@ -27,10 +28,10 @@ Send sms message to use shortcut function
 
 
 Advanced usage
-----------
+--------------
 Inherit SMS class, override post_sent_sms / before_send_sms
 
-.. sourcecode:: python
+.. code-block:: python
 
     import gabia_sms
 
@@ -55,13 +56,13 @@ Installation
 
 You can install the library directly from pypi using pip:
 
-.. sourcecode:: shell
+.. code-block:: shell
 
     $ pip install gabia-sms-Django
 
 Edit your settings.py file:
 
-.. sourcecode:: python
+.. code-block:: python
 
      GABIA_SMS_SETTINGS = {
          'SENDER': 'YOUR NUMBER',
