@@ -1,5 +1,6 @@
+===========================
 Gabia SMS module for Django
-~~~~~~~~~~~~~
+===========================
 
 Python 2 & 3 compatible
 
@@ -16,33 +17,74 @@ Quickstart
 
 Send sms message to use shortcut function
 
-.. sourcecode:: python
+.. code-block:: python
 
     import gabia_sms
 
     try:
-        gabia_sms.send(receiver='will receive phone number', message='message')
+        # Send single SMS
+        gabia_sms.send(message='message', receiver='will receive phone number')
+
+    except SMSModuleException:
+        print('SMS send failure')
+
+- SMS Types: ['sms', 'lms', 'multi_sms', 'multi_lms']
+- Send function returning Tuple(Unique key, Result code)
+
+More usage
+----------
+
+.. code-block:: python
+
+    import gabia_sms
+
+    try:
+        # Reserve single SMS
+        gabia_sms.send(
+            message='message',
+            receiver='will receive phone number',
+            scheduled_time='2018-02-02 22:22:22'
+        )
+
+        # Send multiple SMS
+        gabia_sms.send(message='message', receiver=['phone number', '...'])
+        gabia_sms.send(message='message', receiver=('phone number', '...'))
+
+        # Reserve multiple SMS
+        gabia_sms.send(
+            message='message',
+            receiver=['phone number', '...'],
+            scheduled_time='2018-02-02 22:22:22'
+        )
+
+        # Cancel reservation
+        gabia_sms.cancel_reservation('Unique key', 'SMS type')
+
+        # Request result code
+        gabia_sms.get_send_result('Unique key')
+
     except SMSModuleException:
         print('SMS send failure')
 
 
 Advanced usage
-----------
+--------------
 Inherit SMS class, override post_sent_sms / before_send_sms
 
-.. sourcecode:: python
+.. code-block:: python
 
     import gabia_sms
 
     class AdvancedSMSModule(GabiaSMS):
 
-    def post_sms_sent(self, param, *args, **kwargs):
-       # ... Do what you need
+      def post_sms_sent(self, param, *args, **kwargs):
+         # ... Do what you need
 
-    def before_send_sms(self, param, *args, **kwargs):
-       # ... Do what you need
+      def before_send_sms(self, param, *args, **kwargs):
+         # ... Do what you need
 
-    AdvancedSMSModule.send(receiver='will receive phone number', message='message')
+    AdvancedSMSModule.send(message='message', receiver='will receive phone number')
+
 
 Dependencies
 ------------
@@ -55,13 +97,13 @@ Installation
 
 You can install the library directly from pypi using pip:
 
-.. sourcecode:: shell
+.. code-block:: shell
 
     $ pip install gabia-sms-Django
 
 Edit your settings.py file:
 
-.. sourcecode:: python
+.. code-block:: python
 
      GABIA_SMS_SETTINGS = {
          'SENDER': 'YOUR NUMBER',
