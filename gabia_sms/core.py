@@ -78,8 +78,8 @@ class GabiaSMS:
         """
         pass
 
-    def __get_sms_param(self, message, receiver, scheduled_time,
-                        sms_type='sms', title='SEND'):
+    def __get_sms_param(self, message, receiver, title, scheduled_time,
+                        sms_type='sms'):
 
         self.__validate_required_params(message, receiver)
 
@@ -93,12 +93,13 @@ class GabiaSMS:
             'key': int(timezone.now().timestamp())
         }
 
-    def send(self, receiver, message,
+    def send(self, message, receiver, title='SEND',
              sms_type='sms', scheduled_time='0', *args, **kwargs):
         """
         Use for send SMS\n
-        :param receiver: Receive Phone number
         :param message: Message
+        :param receiver: Receive Phone number
+        :param title: SMS TITLE(DEFAULT VALUE: 'SEND') : Used where the sms_type is 'lms'
         :param sms_type: ref KNOWN_SMS_TYPES: default is sms
         :param scheduled_time: default 0: send immediately or '%Y-%M-%D %h:%m:%s'
         """
@@ -106,7 +107,7 @@ class GabiaSMS:
             raise SMSModuleException('Please check sms type!')
 
         self.__send_single(
-            self.__get_sms_param(message, receiver, scheduled_time),
+            self.__get_sms_param(message, receiver, title, scheduled_time),
             *args,
             **kwargs
         )
