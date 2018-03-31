@@ -1,24 +1,21 @@
 from __future__ import with_statement
 
-import re
 import hashlib
+import re
+
+from django.conf import settings
+from django.utils import timezone
+
+from .exceptions import SMSModuleException
+from .formats import REQUEST_SMS_XML_FORMAT
+from .parser import get_result_code
+from .utils import escape_xml_string, get_nonce
+
+
 try:
     import xmlrpc.client as xmlrpc_lib
 except ImportError:
     import xmlrpclib as xmlrpc_lib
-
-from django.utils import timezone
-from django.conf import settings
-
-from .parser import get_result_code
-from .exceptions import SMSModuleException
-from .utils import (
-    escape_xml_string,
-    get_nonce
-)
-from .formats import (
-    REQUEST_SMS_XML_FORMAT
-)
 
 
 PHONE_NUMBER_REGEX = '01[0|1|6|7|8|9]{1}[0-9]{7,8}'
