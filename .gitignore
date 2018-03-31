@@ -45,6 +45,8 @@ nosetests.xml
 coverage.xml
 *.cover
 .hypothesis/
+.coveralls.yml
+.pytest_cache/
 
 # Translations
 *.mo
@@ -99,3 +101,6 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# Idea
+.idea/

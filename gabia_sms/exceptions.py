@@ -1,0 +1,2 @@
+class SMSModuleException(Exception):
+    pass
