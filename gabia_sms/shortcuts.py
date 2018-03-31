@@ -9,4 +9,4 @@ def send(receiver, message, sms_type='sms', scheduled_time='0', *args, **kwargs)
     :param sms_type: ref KNOWN_SMS_TYPES: default is sms
     :param scheduled_time: default 0: send immediately or '%Y-%M-%D %h:%m:%s'
     """
-    GabiaSMS().send(receiver, message, sms_type, scheduled_time, *args, *kwargs)
+    GabiaSMS().send(receiver, message, sms_type, scheduled_time, *args, **kwargs)
