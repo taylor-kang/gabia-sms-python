@@ -1,4 +1,4 @@
-from .core import GabiaSMS
+from .core import SingletonGabiaSMS
 
 
 def send(message, receiver, title='SEND', sms_type='sms', scheduled_time='0', *args, **kwargs):
@@ -11,7 +11,7 @@ def send(message, receiver, title='SEND', sms_type='sms', scheduled_time='0', *a
     :param scheduled_time: default 0: send immediately or '%Y-%M-%D %h:%m:%s'
     :return Key of sent SMS
     """
-    return GabiaSMS().send(message, receiver, title, sms_type, scheduled_time, *args, **kwargs)
+    return SingletonGabiaSMS().send(message, receiver, title, sms_type, scheduled_time, *args, **kwargs)
 
 
 def get_send_result(key):
@@ -19,4 +19,4 @@ def get_send_result(key):
     :param key: The key to lookup
     :return: Result code received by key
     """
-    return GabiaSMS().get_send_result(key)
+    return SingletonGabiaSMS().get_send_result(key)

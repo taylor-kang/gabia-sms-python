@@ -9,7 +9,7 @@ from django.utils import timezone
 from . import formats
 from .exceptions import SMSModuleException
 from .parser import get_result_code
-from .utils import escape_xml_string, get_nonce
+from .utils import Singleton, escape_xml_string, get_nonce
 
 
 try:
@@ -167,3 +167,7 @@ class GabiaSMS:
                 import logging
                 logging.getLogger(__name__).error(e)
                 raise SMSModuleException('Bad request. Please check api docs')
+
+
+class SingletonGabiaSMS(GabiaSMS, Singleton):
+    pass
