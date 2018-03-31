@@ -63,7 +63,7 @@ class GabiaSMS:
     def __validate_required_multi_params(self, message, receivers):
         if not (message and receivers):
             raise SMSModuleException('Please check required parameters!')
-        elif not isinstance(receivers, list) or not isinstance(receivers, set):
+        elif not isinstance(receivers, list) and not isinstance(receivers, set):
             raise SMSModuleException('Please check parameters type!')
 
         for phone_number in receivers:
@@ -73,8 +73,8 @@ class GabiaSMS:
     def __validate_reservation_params(self, sms_type, receiver):
         if sms_type not in KNOWN_SMS_TYPES:
             raise SMSModuleException('Please check sms type!')
-        elif not isinstance(receiver, str) or \
-                not isinstance(receiver, list) or not isinstance(receiver, set):
+        elif not isinstance(receiver, str) and \
+                not isinstance(receiver, list) and not isinstance(receiver, set):
             raise SMSModuleException('Please check parameters type!')
 
         if isinstance(receiver, str):
