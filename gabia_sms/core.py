@@ -110,12 +110,13 @@ class GabiaSMS:
 
         if sms_type in SINGLE_TYPES:
             self.__validate_required_params(message, receiver)
+            method_name = 'SMS.send'
         else:
-            receivers = set(receiver)
-            self.__validate_required_multi_params(message, receivers)
+            self.__validate_required_multi_params(message, receiver)
 
-            receiver = ','.join(receivers)
+            receiver = ','.join(receiver)
             sms_type = sms_type[-3:]
+            method_name = 'SMS.multi_send'
 
         return {
             'sender': self.__settings['SENDER'],
@@ -124,7 +125,8 @@ class GabiaSMS:
             'receiver': receiver,
             'title': escape_xml_string(title),
             'scheduled_time': scheduled_time,
-            'key': int(timezone.now().timestamp())
+            'key': int(timezone.now().timestamp()),
+            'method_name': method_name
         }
 
     def send(self, message, receiver, title='SEND',
@@ -175,15 +177,12 @@ class GabiaSMS:
             try:
                 self.before_send_sms(param, *args, **kwargs)
 
-                sms_type = param['sms_type']
-                method_name = 'SMS.send' if sms_type in SINGLE_TYPES else 'SMS.multi_send'
-
                 response = proxy.gabiasms(
                     formats.REQUEST_SMS_XML_FORMAT.format(
                         api_id=self.__settings['API_ID'],
                         access_token=self.__get_md5_access_token(),
-                        method_name=method_name,
-                        sms_type=sms_type,
+                        method_name=param['method_name'],
+                        sms_type=param['sms_type'],
                         key=param['key'],
                         title=param['title'],
                         message=param['message'],
