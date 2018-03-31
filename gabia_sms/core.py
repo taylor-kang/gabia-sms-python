@@ -51,7 +51,7 @@ class GabiaSMS:
     def __validate_settings(self):
         for key, value in self.__settings.items():
             if not value:
-                raise SMSModuleException(MISSING_SETTING.format(settings=key))
+                raise SMSModuleException(MISSING_SETTING.format(setting=key))
 
     def __validate_required_params(self, message, receiver):
         if not (message and receiver):
