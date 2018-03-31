@@ -25,6 +25,8 @@ MISSING_SETTING = (
 )
 REQUIRED_SETTINGS = ('API_ID', 'API_KEY', 'SENDER')
 KNOWN_SMS_TYPES = ('sms', 'lms', 'multi_sms', 'multi_lms')
+SINGLE_SMS_TYPES = ('sms', 'lms')
+MULTI_SMS_TYPES = ('multi_sms', 'multi_lms')
 SUCCESS_CODE = '0000'
 
 
@@ -58,6 +60,16 @@ class GabiaSMS:
         elif not re.compile(PHONE_NUMBER_REGEX).search(receiver):
             raise SMSModuleException('Please check phone number!')
 
+    def __validate_required_multi_params(self, message, receivers):
+        if not (message and receivers):
+            raise SMSModuleException('Please check required parameters!')
+        elif not isinstance(receivers, list) or not isinstance(receivers, set):
+            raise SMSModuleException('Please check parameters type!')
+
+        for phone_number in receivers:
+            if not re.compile(PHONE_NUMBER_REGEX).search(phone_number):
+                raise SMSModuleException('Please check phone number!')
+
     def __get_md5_access_token(self):
         nonce = get_nonce()
         return nonce + hashlib.md5(
@@ -78,10 +90,16 @@ class GabiaSMS:
         """
         pass
 
-    def __get_sms_param(self, message, receiver, title, scheduled_time,
-                        sms_type='sms'):
+    def __get_sms_param(self, message, receiver, title, scheduled_time, sms_type):
 
-        self.__validate_required_params(message, receiver)
+        if sms_type in SINGLE_SMS_TYPES:
+            self.__validate_required_params(message, receiver)
+        else:
+            receivers = set(receiver)
+            self.__validate_required_multi_params(message, receivers)
+
+            receiver = ','.join(receivers)
+            sms_type = sms_type[-3:]
 
         return {
             'sender': self.__settings['SENDER'],
@@ -96,19 +114,20 @@ class GabiaSMS:
     def send(self, message, receiver, title='SEND',
              sms_type='sms', scheduled_time='0', *args, **kwargs):
         """
-        Use for send SMS\n
+        Use for send single SMS\n
         :param message: Message
-        :param receiver: Receive Phone number
-        :param title: SMS TITLE(DEFAULT VALUE: 'SEND') : Used where the sms_type is 'lms'
-        :param sms_type: ref KNOWN_SMS_TYPES: default is sms
+        :param receiver: Receive Phone number:
+               if 'multi_sms' or 'multi_lms' receiver type is list or set
+        :param title: SMS TITLE: Used where the sms_type is 'lms' or 'multi_lms'
+        :param sms_type: ['sms', 'lms', 'multi_sms', 'multi_lms'] : default value is 'sms'
         :param scheduled_time: default 0: send immediately or '%Y-%M-%D %h:%m:%s'
         :return Key of sent SMS
         """
         if sms_type not in KNOWN_SMS_TYPES:
             raise SMSModuleException('Please check sms type!')
 
-        return self.__send_single(
-            self.__get_sms_param(message, receiver, title, scheduled_time),
+        return self.__send_sms(
+            self.__get_sms_param(message, receiver, title, scheduled_time, sms_type),
             *args,
             **kwargs
         )
@@ -134,17 +153,24 @@ class GabiaSMS:
                 logging.getLogger(__name__).error(e)
                 raise SMSModuleException('Bad request. Please check api docs')
 
-    def __send_single(self, param, *args, **kwargs):
+    def __send_sms(self, param, *args, **kwargs):
 
         with xmlrpc_lib.ServerProxy(self.__API_URL) as proxy:
             try:
                 self.before_send_sms(param, *args, **kwargs)
 
+                sms_type = param['sms_type']
+
+                if sms_type in SINGLE_SMS_TYPES:
+                    request_format = formats.REQUEST_SMS_XML_FORMAT
+                else:
+                    request_format = formats.REQUEST_MULTI_SMS_XML_FORMAT
+
                 response = proxy.gabiasms(
-                    formats.REQUEST_SMS_XML_FORMAT.format(
+                    request_format.format(
                         api_id=self.__settings['API_ID'],
                         access_token=self.__get_md5_access_token(),
-                        sms_type=param['sms_type'],
+                        sms_type=sms_type,
                         key=param['key'],
                         title=param['title'],
                         message=param['message'],
