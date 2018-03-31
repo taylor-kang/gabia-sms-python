@@ -63,7 +63,9 @@ class GabiaSMS:
 
     def __get_md5_access_token(self):
         nonce = get_nonce()
-        return nonce + hashlib.md5((nonce + self.__settings['API_KEY']).encode()).hexdigest()
+        return nonce + hashlib.md5(
+            (nonce + self.__settings['API_KEY']).encode()
+        ).hexdigest()
 
     def post_sent_sms(self, *args, **kwargs):
         """
