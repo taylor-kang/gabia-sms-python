@@ -160,16 +160,13 @@ class GabiaSMS:
                 self.before_send_sms(param, *args, **kwargs)
 
                 sms_type = param['sms_type']
-
-                if sms_type in SINGLE_SMS_TYPES:
-                    request_format = formats.REQUEST_SMS_XML_FORMAT
-                else:
-                    request_format = formats.REQUEST_MULTI_SMS_XML_FORMAT
+                method_name = 'SMS.send' if sms_type in SINGLE_SMS_TYPES else 'SMS.multi_send'
 
                 response = proxy.gabiasms(
-                    request_format.format(
+                    formats.REQUEST_SMS_XML_FORMAT.format(
                         api_id=self.__settings['API_ID'],
                         access_token=self.__get_md5_access_token(),
+                        method_name=method_name,
                         sms_type=sms_type,
                         key=param['key'],
                         title=param['title'],
