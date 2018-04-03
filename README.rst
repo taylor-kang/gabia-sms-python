@@ -4,13 +4,14 @@ Gabia SMS module for Django
 
 Python 2 & 3 compatible
 
-.. image:: https://travis-ci.org/hwshim0810/gabia-sms-Django.svg?branch=master
-    :target: https://travis-ci.org/hwshim0810/gabia-sms-Django/
-.. image:: https://coveralls.io/repos/github/hwshim0810/gabia-sms-Django/badge.svg?branch=master
-    :target: https://coveralls.io/github/hwshim0810/gabia-sms-Django?branch=master
+.. image:: https://travis-ci.org/athenaslab/gabia-sms-Django.svg?branch=master
+    :target: https://travis-ci.org/athenaslab/gabia-sms-Django/
+.. image:: https://coveralls.io/repos/github/athenaslab/gabia-sms-Django/badge.svg?branch=master
+    :target: https://coveralls.io/github/athenaslab/gabia-sms-Django?branch=master
 
-- Source code: `<https://github.com/hwshim0810/gabia-sms-Django>`_
+- Source code: `<https://github.com/athenaslab/gabia-sms-Django>`_
 - Distribution: `<https://pypi.python.org/pypi/gabia-sms-Django>`_
+- Maintainer: `<https://github.com/hwshim0810>`_
 
 Quickstart
 ----------
