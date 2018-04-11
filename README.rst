@@ -13,6 +13,31 @@ Python 2 & 3 compatible
 - Distribution: `<https://pypi.python.org/pypi/gabia-sms-Django>`_
 - Maintainer: `<https://github.com/hwshim0810>`_
 
+Installation
+------------
+
+You can install the library directly from pypi using pip:
+
+.. code-block:: shell
+
+    $ pip install gabia-sms-Django
+
+Edit your settings.py file:
+
+.. code-block:: python
+
+     GABIA_SMS_SETTINGS = {
+         'SENDER': 'YOUR NUMBER',
+         'API_ID': 'YOUR API ID,
+         'API_KEY': 'YOUR API KEY'
+     }
+
+Dependencies
+------------
+
+- Python 2.7 or 3.4+
+- Django 1.11+
+
 Quickstart
 ----------
 
@@ -47,6 +72,12 @@ More usage
             scheduled_time='2018-02-02 22:22:22'
         )
 
+        # if not assign scheduled_time, send immediately
+        gabia_sms.send(
+            message='message',
+            receiver='will receive phone number'
+        )
+
         # Send multiple SMS
         gabia_sms.send(message='message', receiver=['phone number', '...'])
         gabia_sms.send(message='message', receiver=('phone number', '...'))
@@ -76,7 +107,7 @@ Inherit SMS class, override post_sent_sms / before_send_sms
 
     import gabia_sms
 
-    class AdvancedSMSModule(GabiaSMS):
+    class AdvancedSMSModule(gabia_sms.GabiaSMS):
 
       def post_sms_sent(self, param, *args, **kwargs):
          # ... Do what you need
@@ -86,31 +117,15 @@ Inherit SMS class, override post_sent_sms / before_send_sms
 
     AdvancedSMSModule.send(message='message', receiver='will receive phone number')
 
-
-Dependencies
-------------
-
-- Python 2.7 or 3.4+
-- Django 1.11+
-
-Installation
-------------
-
-You can install the library directly from pypi using pip:
-
-.. code-block:: shell
-
-    $ pip install gabia-sms-Django
-
-Edit your settings.py file:
+or Use SingletonClass
 
 .. code-block:: python
 
-     GABIA_SMS_SETTINGS = {
-         'SENDER': 'YOUR NUMBER',
-         'API_ID': 'YOUR API ID,
-         'API_KEY': 'YOUR API KEY'
-     }
+    import gabia_sms
+
+    class AdvancedSMSModule(gabia_sms.SingletonGabiaSMS):
+        # ...
+        pass
 
 Contributors
 ------------

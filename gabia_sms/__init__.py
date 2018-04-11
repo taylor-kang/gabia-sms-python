@@ -3,7 +3,10 @@ from __future__ import absolute_import
 
 from pkg_resources import get_distribution
 
-from .core import GabiaSMS
+from .core import (
+    GabiaSMS,
+    SingletonGabiaSMS
+)
 from .exceptions import SMSModuleException
 from .shortcuts import (
     send,
@@ -15,6 +18,7 @@ __version__ = get_distribution('gabia-sms-Django').version
 
 __all__ = (
     'GabiaSMS',
+    'SingletonGabiaSMS',
     'SMSModuleException',
     'send',
     'get_send_result',
