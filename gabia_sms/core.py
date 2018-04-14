@@ -7,6 +7,7 @@ from django.conf import settings
 from django.utils import timezone
 
 from . import formats
+from . import codes
 from .exceptions import SMSModuleException
 from .parser import get_result_code
 from .utils import Singleton, escape_xml_string, get_nonce
@@ -27,7 +28,6 @@ REQUIRED_SETTINGS = ('API_ID', 'API_KEY', 'SENDER')
 KNOWN_SMS_TYPES = ('sms', 'lms', 'multi_sms', 'multi_lms')
 SINGLE_TYPES = ('sms', 'lms')
 MULTI_TYPES = ('multi_sms', 'multi_lms')
-SUCCESS_CODE = '0000'
 
 
 class GabiaSMS:
@@ -193,7 +193,7 @@ class GabiaSMS:
                 )
                 result_code = get_result_code(response)
 
-                if result_code != SUCCESS_CODE:
+                if result_code != codes.SUCCESS_CODE:
                     import logging
                     logging.getLogger(__name__).debug(result_code)
 
