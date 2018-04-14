@@ -28,7 +28,7 @@ ROOT_URLCONF = 'core.urls'
 SECRET_KEY = 'foobar'
 
 GABIA_SMS_SETTINGS = {
-    'SENDER': '',
-    'API_ID': '',
-    'API_KEY': ''
+    'SENDER': '01000000000',
+    'API_ID': 'test_api_id',
+    'API_KEY': 'test_api_key'
 }
