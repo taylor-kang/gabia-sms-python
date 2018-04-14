@@ -7,6 +7,7 @@ from .core import (
     GabiaSMS,
     SingletonGabiaSMS
 )
+from . import codes
 from .exceptions import SMSModuleException
 from .shortcuts import (
     send,
@@ -22,5 +23,6 @@ __all__ = (
     'SMSModuleException',
     'send',
     'get_send_result',
-    'cancel_reservation'
+    'cancel_reservation',
+    'codes'
 )
