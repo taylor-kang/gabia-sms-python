@@ -1,3 +1,8 @@
+try:
+    from unittest.mock import MagicMock
+except ImportError:
+    from mock import MagicMock
+
 from django.test import TestCase
 
 import gabia_sms
@@ -7,6 +12,7 @@ class SendTestCase(TestCase):
 
     test_message = 'Test Message'
     test_receiver = '01000000000'
+    test_key = '1523688246'
 
     @classmethod
     def __get_module(cls):
@@ -41,6 +47,17 @@ class SendTestCase(TestCase):
     def test_invalid_receiver_regex_error_message(self):
         with self.assertRaisesMessage(gabia_sms.SMSModuleException,
                                       'Please check phone number!'):
-            self.__get_module().send(self.test_message, '01500000000')
-            self.__get_module().send(self.test_message, '0101234')
-            self.__get_module().send(self.test_message, '010123456')
+            module = self.__get_module()
+
+            module.send(self.test_message, '01500000000')
+            module.send(self.test_message, '0101234')
+            module.send(self.test_message, '010123456')
+
+    def test_received_invalid_auth_code_after_invalid_auth_request(self):
+        module = self.__get_module()
+        module.send = MagicMock()
+        module.send.return_value = self.test_key, gabia_sms.codes.INVALID_AUTH_REQUEST_CODE
+
+        _, code = module.send(self.test_message, self.test_receiver)
+
+        self.assertEqual(code, gabia_sms.codes.INVALID_AUTH_REQUEST_CODE)
