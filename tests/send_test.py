@@ -22,3 +22,8 @@ class SendTestCase(TestCase):
         with self.assertRaisesMessage(gabia_sms.SMSModuleException,
                                       'Please check required parameters!'):
             self.__get_module().send('', self.test_receiver)
+
+    def test_empty_receiver_error_message(self):
+        with self.assertRaisesMessage(gabia_sms.SMSModuleException,
+                                      'Please check required parameters!'):
+            self.__get_module().send(self.test_message, '')
