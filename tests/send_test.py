@@ -41,9 +41,11 @@ class SendTestCase(TestCase):
     def test_invalid_receiver_regex_error_message(self):
         with self.assertRaisesMessage(gabia_sms.SMSModuleException,
                                       'Please check phone number!'):
-            self.__get_module().send(self.test_message, '01500000000')
-            self.__get_module().send(self.test_message, '0101234')
-            self.__get_module().send(self.test_message, '010123456')
+            module = self.__get_module()
+
+            module.send(self.test_message, '01500000000')
+            module.send(self.test_message, '0101234')
+            module.send(self.test_message, '010123456')
 
     def test_received_invalid_auth_code_after_invalid_auth_request(self):
         _, code = self.__get_module().send(self.test_message, self.test_receiver)
