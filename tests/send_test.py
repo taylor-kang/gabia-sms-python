@@ -44,5 +44,3 @@ class SendTestCase(TestCase):
             self.__get_module().send(self.test_message, '01500000000')
             self.__get_module().send(self.test_message, '0101234')
             self.__get_module().send(self.test_message, '010123456')
-
-
