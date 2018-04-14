@@ -17,3 +17,9 @@ class SendTestCase(TestCase):
         with self.assertRaisesMessage(gabia_sms.SMSModuleException,
                                       'Please check sms type!'):
             self.__get_module().cancel_reservation(self.test_key, 'invalid type')
+
+    def test_invalid_receiver_error_message(self):
+        with self.assertRaisesMessage(gabia_sms.SMSModuleException,
+                                      'Please check parameters type!'):
+            self.__get_module().cancel_reservation(self.test_key, 'sms', int)
+            self.__get_module().cancel_reservation(self.test_key, 'sms', dict)
