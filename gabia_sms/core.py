@@ -6,8 +6,7 @@ import re
 from django.conf import settings
 from django.utils import timezone
 
-from . import formats
-from . import codes
+from . import codes, formats
 from .exceptions import SMSModuleException
 from .parser import get_result_code
 from .utils import Singleton, escape_xml_string, get_nonce
