@@ -13,12 +13,12 @@ class SendTestCase(TestCase):
     def __get_module(cls):
         return gabia_sms.SingletonGabiaSMS()
 
-    def test_invalid_sent_type_error_message(self):
+    def test_cancel_invalid_sent_type_error_message(self):
         with self.assertRaisesMessage(gabia_sms.SMSModuleException,
                                       'Please check sms type!'):
             self.__get_module().cancel_reservation(self.test_key, 'invalid type')
 
-    def test_invalid_receiver_error_message(self):
+    def test_cancel_invalid_receiver_error_message(self):
         with self.assertRaisesMessage(gabia_sms.SMSModuleException,
                                       'Please check parameters type!'):
             self.__get_module().cancel_reservation(self.test_key, 'sms', int)
