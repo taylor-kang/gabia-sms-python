@@ -44,3 +44,8 @@ class SendTestCase(TestCase):
             self.__get_module().send(self.test_message, '01500000000')
             self.__get_module().send(self.test_message, '0101234')
             self.__get_module().send(self.test_message, '010123456')
+
+    def test_received_invalid_auth_code_after_invalid_auth_request(self):
+        _, code = self.__get_module().send(self.test_message, self.test_receiver)
+
+        self.assertEqual(code, gabia_sms.codes.INVALID_AUTH_REQUEST_CODE)
