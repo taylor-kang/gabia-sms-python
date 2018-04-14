@@ -30,3 +30,16 @@ class SendTestCase(TestCase):
             self.__get_module().cancel_reservation(self.test_key, 'sms', '01500000000')
             self.__get_module().cancel_reservation(self.test_key, 'sms', '0101234')
             self.__get_module().cancel_reservation(self.test_key, 'sms', '010123456')
+
+    def test_cancel_invalid_receivers_regex_error_message(self):
+        with self.assertRaisesMessage(gabia_sms.SMSModuleException,
+                                      'Please check phone number!'):
+            self.__get_module().cancel_reservation(
+                self.test_key, 'sms', ['01500000000', self.test_receiver]
+            )
+            self.__get_module().cancel_reservation(
+                self.test_key, 'sms', ['0101234', self.test_receiver]
+            )
+            self.__get_module().cancel_reservation(
+                self.test_key, 'sms', ['010123456', self.test_receiver]
+            )
