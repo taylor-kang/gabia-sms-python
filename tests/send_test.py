@@ -37,3 +37,12 @@ class SendTestCase(TestCase):
         with self.assertRaisesMessage(gabia_sms.SMSModuleException,
                                       'Please check parameters type!'):
             self.__get_module().send(self.test_message, 1000000000)
+
+    def test_invalid_receiver_regex_error_message(self):
+        with self.assertRaisesMessage(gabia_sms.SMSModuleException,
+                                      'Please check phone number!'):
+            self.__get_module().send(self.test_message, '01500000000')
+            self.__get_module().send(self.test_message, '0101234')
+            self.__get_module().send(self.test_message, '010123456')
+
+
