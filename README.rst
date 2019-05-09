@@ -113,4 +113,4 @@ or Use SingletonClass
 
 Acknowledgements
 --------------
-Thanks `<https://github.com/athenaslab/gabia-sms-Django>` for gabia-sms-Django version
+Thanks `https://github.com/athenaslab/gabia-sms-Django` for gabia-sms-Django version
