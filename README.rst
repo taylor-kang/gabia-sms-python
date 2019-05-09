@@ -110,3 +110,7 @@ or Use SingletonClass
     class AdvancedSMSModule(gabia_sms.SingletonGabiaSMS):
         # ...
         pass
+
+Acknowledgements
+--------------
+Thanks `<https://github.com/athenaslab/gabia-sms-Django>` for gabia-sms-Django version
