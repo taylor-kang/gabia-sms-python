@@ -5,7 +5,7 @@ Gabia SMS module for Python
 Python 2 & 3 compatible
 
 - Source code: `<https://github.com/taylor-kang/gabia-sms-python>`_
-- Distribution: `<>`_
+- Distribution: `<https://pypi.org/project/gabia-sms-python>`_
 - Maintainer: `<https://github.com/taylor-kang>`_
 
 Installation
@@ -15,7 +15,7 @@ You can install the library directly from pypi using pip:
 
 .. code-block:: shell
 
-    $ pip install gabia-sms-Django
+    $ pip install gabia-sms-python
 
 Dependencies
 ------------
