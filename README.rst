@@ -1,17 +1,12 @@
 ===========================
-Gabia SMS module for Django
+Gabia SMS module for Python
 ===========================
 
 Python 2 & 3 compatible
 
-.. image:: https://travis-ci.org/athenaslab/gabia-sms-Django.svg?branch=master
-    :target: https://travis-ci.org/athenaslab/gabia-sms-Django/
-.. image:: https://coveralls.io/repos/github/athenaslab/gabia-sms-Django/badge.svg?branch=master
-    :target: https://coveralls.io/github/athenaslab/gabia-sms-Django?branch=master
-
-- Source code: `<https://github.com/athenaslab/gabia-sms-Django>`_
-- Distribution: `<https://pypi.python.org/pypi/gabia-sms-Django>`_
-- Maintainer: `<https://github.com/hwshim0810>`_
+- Source code: `<https://github.com/taylor-kang/gabia-sms-python>`_
+- Distribution: `<>`_
+- Maintainer: `<https://github.com/taylor-kang>`_
 
 Installation
 ------------
@@ -22,21 +17,10 @@ You can install the library directly from pypi using pip:
 
     $ pip install gabia-sms-Django
 
-Edit your settings.py file:
-
-.. code-block:: python
-
-     GABIA_SMS_SETTINGS = {
-         'SENDER': 'YOUR NUMBER',
-         'API_ID': 'YOUR API ID,
-         'API_KEY': 'YOUR API KEY'
-     }
-
 Dependencies
 ------------
 
 - Python 2.7 or 3.4+
-- Django 1.11+
 
 Quickstart
 ----------
@@ -126,8 +110,3 @@ or Use SingletonClass
     class AdvancedSMSModule(gabia_sms.SingletonGabiaSMS):
         # ...
         pass
-
-Contributors
-------------
-
-See https://github.com/hwshim0810/gabia-sms-Django/graphs/contributors

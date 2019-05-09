@@ -3,7 +3,7 @@ from __future__ import with_statement
 import setuptools
 
 
-VERSION = '0.1'
+VERSION = '1.0'
 
 
 def readme():
@@ -13,10 +13,6 @@ def readme():
     except IOError:
         return ''
 
-
-INSTALL_REQUIRES = [
-    'Flask>=1.0.2',
-]
 
 TESTS_REQUIRE = [
     'pytest>=3.0.0',
@@ -28,20 +24,19 @@ TESTS_REQUIRE = [
 
 setuptools.setup(
     name='gabia-sms-python',
-    version=1.0,
+    version='1.0',
     description='Send SMS messages to mobile devices through GABIA SMS api.',
     long_description=readme(),
     author='Taehee Kang',
     author_email='taehee.taylor.kang@gmail.com',
-    url='https://github.com/', #
-    download_url='https://github.com//master.zip', #
+    url='https://github.com/taylor-kang/gabia-sms-python.git',
+    download_url='https://github.com/taylor-kang/gabia-sms-python/archive/master.zip',
     packages=(setuptools.find_packages()),
-    install_requires=INSTALL_REQUIRES,
+    install_requires=[],
     tests_require=TESTS_REQUIRE,
     classifiers=[
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
-        'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
