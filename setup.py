@@ -1,9 +1,9 @@
 from __future__ import with_statement
 
-from setuptools import setup
+import setuptools
 
 
-VERSION = '1.2.1'
+VERSION = '0.1'
 
 
 def readme():
@@ -15,7 +15,7 @@ def readme():
 
 
 INSTALL_REQUIRES = [
-    'Django>=1.11',
+    'Flask>=1.0.2',
 ]
 
 TESTS_REQUIRE = [
@@ -26,16 +26,16 @@ TESTS_REQUIRE = [
 ]
 
 
-setup(
-    name='gabia-sms-Django',
+setuptools.setup(
+    name='gabia-sms-Flask',
     version=VERSION,
     description='Send SMS messages to mobile devices through GABIA SMS api.',
     long_description=readme(),
-    author='Hyunwoo Shim',
-    author_email='hyunwoo.shim@laziness.xyz',
-    url='https://github.com/hwshim0810/gabia-sms-Django',
-    download_url='https://github.com/hwshim0810/gabia-sms-Django/archive/master.zip',
-    packages=('gabia_sms',),
+    author='Taehee Kang',
+    author_email='taehee.taylor.kang@gmail.com',
+    url='https://github.com/', #
+    download_url='https://github.com//master.zip', #
+    packages=(setuptools.find_packages()),
     install_requires=INSTALL_REQUIRES,
     tests_require=TESTS_REQUIRE,
     classifiers=[
@@ -48,6 +48,6 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
 )

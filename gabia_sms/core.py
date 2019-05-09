@@ -1,10 +1,6 @@
-from __future__ import with_statement
-
 import hashlib
 import re
-
-from django.conf import settings
-from django.utils import timezone
+import datetime
 
 from . import codes, formats
 from .exceptions import SMSModuleException
@@ -27,6 +23,7 @@ REQUIRED_SETTINGS = ('API_ID', 'API_KEY', 'SENDER')
 KNOWN_SMS_TYPES = ('sms', 'lms', 'multi_sms', 'multi_lms')
 SINGLE_TYPES = ('sms', 'lms')
 MULTI_TYPES = ('multi_sms', 'multi_lms')
+UTC_TZ = False
 
 
 class GabiaSMS:
@@ -124,7 +121,8 @@ class GabiaSMS:
             'receiver': receiver,
             'title': escape_xml_string(title),
             'scheduled_time': scheduled_time,
-            'key': int(timezone.now().timestamp()),
+            'key': int(datetime.now().timestamp() if UTC_TZ is False
+                       else datetime.utcnow().replace(tzinfo=utc).timestamp()),
             'method_name': method_name
         }
 

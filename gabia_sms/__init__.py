@@ -15,7 +15,7 @@ from .shortcuts import (
     cancel_reservation
 )
 
-__version__ = get_distribution('gabia-sms-Django').version
+__version__ = get_distribution('gabia-sms-Flask').version
 
 __all__ = (
     'GabiaSMS',
