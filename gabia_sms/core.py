@@ -1,12 +1,10 @@
 import hashlib
 import re
 import datetime
-
 from . import codes, formats
 from .exceptions import SMSModuleException
 from .parser import get_result_code
 from .utils import Singleton, escape_xml_string, get_nonce
-
 
 try:
     import xmlrpc.client as xmlrpc_lib
@@ -35,9 +33,13 @@ class GabiaSMS:
         self.__settings = self.__get_module_settings()
         self.__validate_settings()
 
-    def __get_module_settings(self):
-        module_settings = getattr(settings, self.__MODULE_SETTINGS_NAME, {})
+    def configure(self, api_id, api_key, sender):
+        self.__settings.setdefault('API_ID', api_id)
+        self.__settings.setdefault('API_KEY', api_key)
+        self.__settings.setdefault('SENDER', sender)
 
+    def __get_module_settings(self):
+        module_settings = getattr({}, self.__MODULE_SETTINGS_NAME, {})
         for setting_key in REQUIRED_SETTINGS:
             module_settings.setdefault(setting_key, None)
 

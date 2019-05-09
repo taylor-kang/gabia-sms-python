@@ -27,8 +27,8 @@ TESTS_REQUIRE = [
 
 
 setuptools.setup(
-    name='gabia-sms-Flask',
-    version=VERSION,
+    name='gabia-sms-python',
+    version=1.0,
     description='Send SMS messages to mobile devices through GABIA SMS api.',
     long_description=readme(),
     author='Taehee Kang',
