@@ -28,25 +28,22 @@ class GabiaSMS:
 
     __API_URL = 'http://sms.gabia.com/api'
     __MODULE_SETTINGS_NAME = 'GABIA_SMS_SETTINGS'
-
-    def __init__(self):
-        self.__settings = self.__get_module_settings()
-        self.__validate_settings()
+    __setting = {
+        'API_ID': None,
+        'API_ID': None,
+        'API_ID': None
+    }
 
     def configure(self, api_id, api_key, sender):
-        self.__settings.setdefault('API_ID', api_id)
-        self.__settings.setdefault('API_KEY', api_key)
-        self.__settings.setdefault('SENDER', sender)
+        self.__setting['API_ID'] = api_id
+        self.__setting['API_KEY'] = api_key
+        self.__setting['SENDER'] = sender
 
-    def __get_module_settings(self):
-        module_settings = getattr({}, self.__MODULE_SETTINGS_NAME, {})
-        for setting_key in REQUIRED_SETTINGS:
-            module_settings.setdefault(setting_key, None)
-
-        return module_settings
+    def get_gabia_settings(self):
+        return self.__setting
 
     def __validate_settings(self):
-        for key, value in self.__settings.items():
+        for key, value in self.__setting.items():
             if not value:
                 raise SMSModuleException(MISSING_SETTING.format(setting=key))
 
@@ -87,7 +84,7 @@ class GabiaSMS:
     def __get_md5_access_token(self):
         nonce = get_nonce()
         return nonce + hashlib.md5(
-            (nonce + self.__settings['API_KEY']).encode()
+            (nonce + self.__setting['API_KEY']).encode()
         ).hexdigest()
 
     def post_sent_sms(self, *args, **kwargs):
@@ -117,7 +114,7 @@ class GabiaSMS:
             method_name = 'SMS.multi_send'
 
         return {
-            'sender': self.__settings['SENDER'],
+            'sender': self.__setting['SENDER'],
             'sms_type': sms_type,
             'message': escape_xml_string(message),
             'receiver': receiver,
@@ -140,6 +137,8 @@ class GabiaSMS:
         :param scheduled_time: default 0: send immediately or '%Y-%M-%D %h:%m:%s'
         :return Tuple (Key of sent SMS, result code)
         """
+        self.__validate_settings()
+
         if sms_type not in KNOWN_SMS_TYPES:
             raise SMSModuleException('Please check sms type!')
 
@@ -154,11 +153,12 @@ class GabiaSMS:
         :param key: The key to lookup
         :return: Result code received by key
         """
+        self.__validate_settings()
         with xmlrpc_lib.ServerProxy(self.__API_URL) as proxy:
             try:
                 response = proxy.gabiasms(
                     formats.REQUEST_SMS_RESULT_FORMAT.format(
-                        api_id=self.__settings['API_ID'],
+                        api_id=self.__setting['API_ID'],
                         access_token=self.__get_md5_access_token(),
                         key=key
                     )
@@ -178,7 +178,7 @@ class GabiaSMS:
 
                 response = proxy.gabiasms(
                     formats.REQUEST_SMS_XML_FORMAT.format(
-                        api_id=self.__settings['API_ID'],
+                        api_id=self.__setting['API_ID'],
                         access_token=self.__get_md5_access_token(),
                         method_name=param['method_name'],
                         sms_type=param['sms_type'],
@@ -212,14 +212,14 @@ class GabiaSMS:
         :param receiver: Will receive phone number : string or list or set
                Default value is empty string(Cancel all reservation)
         """
-
+        self.__validate_settings()
         self.__validate_reservation_params(sms_type, receiver)
 
         with xmlrpc_lib.ServerProxy(self.__API_URL) as proxy:
             try:
                 response = proxy.gabiasms(
                     formats.REQUEST_RESERVE_CANCEL_FORMAT.format(
-                        api_id=self.__settings['API_ID'],
+                        api_id=self.__setting['API_ID'],
                         access_token=self.__get_md5_access_token(),
                         key=key,
                         sms_type=sms_type,

@@ -12,7 +12,9 @@ from .exceptions import SMSModuleException
 from .shortcuts import (
     send,
     get_send_result,
-    cancel_reservation
+    cancel_reservation,
+    configure,
+    get_gabia_settings
 )
 
 __version__ = get_distribution('gabia-sms-python').version
@@ -25,5 +27,6 @@ __all__ = (
     'get_send_result',
     'cancel_reservation',
     'codes',
-    'configure'
+    'configure',
+    'get_gabia_settings'
 )

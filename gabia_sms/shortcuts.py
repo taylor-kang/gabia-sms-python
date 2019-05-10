@@ -35,3 +35,23 @@ def cancel_reservation(key, sms_type, receiver=''):
            Default value is empty string(Cancel all reservation)
     """
     return SingletonGabiaSMS().cancel_reservation(key, sms_type, receiver)
+
+
+def configure(api_id, api_key, sender):
+    """
+    Shortcut function for api configure\n
+    :param api_id: Gabia API ID
+    :param api_key: Gabia API ID
+    :param sender: Gabia sender info
+    """
+    return SingletonGabiaSMS().configure(api_id, api_key, sender)
+
+
+def get_gabia_settings():
+    """
+    Shortcut function for api configure\n
+    :param api_id: Gabia API ID
+    :param api_key: Gabia API ID
+    :param sender: Gabia sender info
+    """
+    return SingletonGabiaSMS().get_gabia_settings()
