@@ -24,6 +24,15 @@ Dependencies
 
 Quickstart
 ----------
+Before api usage, set your Gabia API-ID,API-KEY, SENDER value
+
+.. code-block:: python
+
+    import gabia_sms
+
+    # Set Gabia-sms configure
+    gabia_sms.configure(api_id='API_ID', api_key='API_KEY', sender='SENDER')
+
 
 Send sms message to use shortcut function
 

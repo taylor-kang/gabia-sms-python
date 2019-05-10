@@ -3,7 +3,7 @@ from __future__ import with_statement
 import setuptools
 
 
-VERSION = '1.0.2'
+VERSION = '1.0.4'
 
 
 def readme():
@@ -24,7 +24,7 @@ TESTS_REQUIRE = [
 
 setuptools.setup(
     name='gabia-sms-python',
-    version='1.0.2',
+    version='1.0.4',
     description='Send SMS messages to mobile devices through GABIA SMS api.',
     long_description=readme(),
     author='Taehee Kang',

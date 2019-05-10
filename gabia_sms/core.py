@@ -30,8 +30,8 @@ class GabiaSMS:
     __MODULE_SETTINGS_NAME = 'GABIA_SMS_SETTINGS'
     __setting = {
         'API_ID': None,
-        'API_ID': None,
-        'API_ID': None
+        'API_KEY': None,
+        'SENDER': None
     }
 
     def configure(self, api_id, api_key, sender):
@@ -120,8 +120,8 @@ class GabiaSMS:
             'receiver': receiver,
             'title': escape_xml_string(title),
             'scheduled_time': scheduled_time,
-            'key': int(datetime.now().timestamp() if UTC_TZ is False
-                       else datetime.utcnow().replace(tzinfo=utc).timestamp()),
+            'key': int(datetime.datetime.now().timestamp() if UTC_TZ is False
+                       else datetime.datetime.utcnow().replace(tzinfo=utc).timestamp()),
             'method_name': method_name
         }
 
@@ -185,11 +185,12 @@ class GabiaSMS:
                         key=param['key'],
                         title=param['title'],
                         message=param['message'],
-                        sender=param['sender'],
+                        sender=self.__setting['SENDER'],
                         receiver=param['receiver'],
                         scheduled_time=param['scheduled_time']
                     )
                 )
+
                 result_code = get_result_code(response)
 
                 if result_code != codes.SUCCESS_CODE:
